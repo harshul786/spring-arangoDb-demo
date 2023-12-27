@@ -1,6 +1,6 @@
-# ArangoDB Spring APIs - CharacterController
+# ArangoDB Spring APIs
 
-This repository contains a Java Spring project demonstrating the implementation of CRUD operations using ArangoDB in the CharacterController.
+This repository contains a Java Spring project demonstrating the implementation of CRUD operations using ArangoDB.
 
 ## Features
 
@@ -50,9 +50,9 @@ Before running this project, ensure you have the following installed:
 To run the application, follow these steps:
 
 1. Open the project in IntelliJ IDEA.
-2. Locate the `CharacterController` class in the project.
-3. Right-click on the `CharacterController` class.
-4. Select "Run CharacterController" or "Debug CharacterController" from the context menu.
+2. Locate the `DemoApplication` class in the project.
+3. Right-click on the `DemoApplication` class.
+4. Select "Run DemoApplication" or "Debug DemoApplication" from the context menu.
 
 ### Test the APIs:
 
