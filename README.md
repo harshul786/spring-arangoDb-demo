@@ -72,4 +72,14 @@ Use appropriate HTTP methods (GET, POST, PUT, DELETE) along with the provided en
 
 Ensure you provide valid data and appropriate request payloads while testing the APIs.
 
-   
+#### Sample Payload:
+
+Use the following JSON payload as a sample for POST and PUT requests:
+
+```json
+{
+    "name": "harshul",
+    "surname": "namdev",
+    "alive": true,
+    "age": 22
+}
