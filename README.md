@@ -36,11 +36,11 @@ Before running this project, ensure you have the following installed:
    docker run -e ARANGO_NO_AUTH=1 -p 8529:8529 -d --name test-arangodb arangodb
    
 2. **Verify ArangoDB Container:**
-   - Check if the container is running:
+- Check if the container is running:
     ```bash
     docker ps
     
-  - Access ArangoDB Web Interface:
+- Access ArangoDB Web Interface:
     Open a web browser and go to http://localhost:8529.
 
 ## Running the Application
