@@ -1,7 +1,6 @@
 package com.demo.configurations;
 
 import com.arangodb.ArangoDB;
-import com.arangodb.Protocol;
 import com.arangodb.springframework.annotation.EnableArangoRepositories;
 import com.arangodb.springframework.config.ArangoConfiguration;
 import org.springframework.context.annotation.Configuration;
@@ -14,12 +13,12 @@ public class DemoConfiguration implements ArangoConfiguration {
     public ArangoDB.Builder arango() {
         return new ArangoDB.Builder()
                 .host("localhost", 8529)
-                .useProtocol(Protocol.HTTP_JSON)
+//                .useProtocol(Protocol.HTTP_JSON)
                 .user("root").password(null);
     }
 
     @Override
     public String database() {
-        return "spring-demo";
+        return "arango-spring-demo";
     }
 }
