@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class SignupAuthRequestDTO {
+    private String email;
     private String username;
     private String password;
 

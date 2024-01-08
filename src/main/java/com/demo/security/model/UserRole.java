@@ -3,10 +3,14 @@ package com.demo.security.model;
 
 import com.arangodb.springframework.annotation.ArangoId;
 import com.arangodb.springframework.annotation.Document;
+import com.arangodb.springframework.annotation.Relations;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+
+import java.util.Collection;
+import java.util.HashSet;
 
 @Data
 @NoArgsConstructor
@@ -20,9 +24,9 @@ public class UserRole {
 
     private String name;
 
-//    @JsonIgnore
-//    @Relations(edges = UserReference.class, lazy = false, maxDepth = 1, direction= Relations.Direction.INBOUND)
-//    private Collection<UserInfo> users;
+    @Relations(edges = RolePermissionReference.class, lazy = true)
+    private Collection<UserPermission> permissions = new HashSet<>();
+
 
     @Override
     public String toString() {
@@ -30,11 +34,11 @@ public class UserRole {
                 "id='" + id + '\'' +
                 ", arangoId='" + arangoId + '\'' +
                 ", name='" + name + '\'' +
-//                ", users=" + users +
                 '}';
     }
 
     public UserRole(String Name){
         this.name=Name;
+        this.setPermissions(new HashSet<>());
     }
 }

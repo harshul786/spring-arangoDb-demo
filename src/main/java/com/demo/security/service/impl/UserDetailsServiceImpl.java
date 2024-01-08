@@ -23,4 +23,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
         return new CustomUserDetails(user);
     }
+
+    public String getEmailByUsername(String username){
+        UserInfo user = userRepository.findByUsername(username);
+        return user.getEmail();
+    }
 }

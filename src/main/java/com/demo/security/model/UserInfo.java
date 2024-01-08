@@ -26,6 +26,8 @@ public class UserInfo {
 
     private String password;
 
+    private String email;
+
     @Relations(edges = UserReference.class, lazy = true)
     private Collection<UserRole> roles;
 

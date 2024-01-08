@@ -67,7 +67,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public JwtResponseDTO signup(SignupAuthRequestDTO request) {
         Set<UserRole> roles = createRolesSet(request.getRoles());
-        var user = UserInfo.builder().username(request.getUsername()).password(passwordEncoder.encode(request.getPassword()))
+        var user = UserInfo.builder().username(request.getUsername()).password(passwordEncoder.encode(request.getPassword())).email(request.getEmail())
                 .build();
         user.setRoles(roles);
         userRepository.save(user);
@@ -75,9 +75,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         saveRoleAndUserReference(roles, user);
         userRepository.save(user);
-        System.out.println(user);
 
-        var jwt = jwtService.GenerateToken(user.getUsername());
+        var jwt = jwtService.GenerateToken(user.getUsername(), user.getEmail());
         return JwtResponseDTO.builder().accessToken(jwt).build();
     }
 
@@ -91,7 +90,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new IllegalArgumentException("Invalid email or password.");
         }
 
-        var jwt = jwtService.GenerateToken(user.getUsername());
+        var jwt = jwtService.GenerateToken(user.getUsername(), user.getEmail());
         return JwtResponseDTO.builder().accessToken(jwt).build();
     }
 }

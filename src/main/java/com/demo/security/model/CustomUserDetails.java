@@ -20,14 +20,19 @@ public class CustomUserDetails extends UserInfo implements UserDetails {
         List<GrantedAuthority> auths = new ArrayList<>();
 
         for(UserRole role : byUsername.getRoles()){
-
-            auths.add(new SimpleGrantedAuthority(role.getName().toUpperCase()));
+            auths.add(new SimpleGrantedAuthority("ROLE_"+role.getName().toUpperCase()));
+            auths.addAll(
+                    role.getPermissions().stream()
+                            .map(userPermission -> new SimpleGrantedAuthority(
+                                    role.getName().toUpperCase() + "_" + userPermission.getName().toUpperCase()
+                            )).toList());
         }
         this.authorities = auths;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        System.out.println(authorities);
         return authorities;
     }
 

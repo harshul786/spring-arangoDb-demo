@@ -15,10 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @RequestMapping(value = "/api/v1/character")
@@ -37,7 +34,8 @@ public class CharacterController {
         List<Character> list= new ArrayList<Character>();
         repository.findAll().forEach(list::add);
 
-        return CustomResponseModel.wrapWithData(list);
+        if(list.isEmpty()) return CustomResponseModel.wrapWithData(Collections.emptyList());
+        else return CustomResponseModel.wrapWithData(list);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -74,31 +72,26 @@ public class CharacterController {
 
     @PostMapping("/childOf")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<String> establishChildOfRelationship(
+    public ResponseEntity<CustomResponseModel<String>> establishChildOfRelationship(
             @RequestBody CustomRelationshipModel customRelationshipModel
             ) {
-        try{
-            String parentFirstName=customRelationshipModel.getParentFirstName();
-            String parentSurname=customRelationshipModel.getParentSurname();
-            String childFirstName=customRelationshipModel.getChildFirstName();
-            String childSurname=customRelationshipModel.getChildSurname();
-            System.out.println(parentFirstName+ parentSurname+ childFirstName+ childSurname);
-            Character parent = repository.findByNameAndSurname(parentFirstName, parentSurname)
-                    .orElseThrow(() -> new RuntimeException("Parent character not found: " + parentFirstName + " " + parentSurname));
-            Character child = repository.findByNameAndSurname(childFirstName, childSurname)
-                    .orElseThrow(() -> new RuntimeException("Child character not found: " + childFirstName + " " + childSurname));
+        String parentFirstName=customRelationshipModel.getParentFirstName();
+        String parentSurname=customRelationshipModel.getParentSurname();
+        String childFirstName=customRelationshipModel.getChildFirstName();
+        String childSurname=customRelationshipModel.getChildSurname();
+        System.out.println(parentFirstName+ parentSurname+ childFirstName+ childSurname);
+        Character parent = repository.findByNameAndSurname(parentFirstName, parentSurname)
+                .orElseThrow(() -> new RuntimeException("Parent character not found: " + parentFirstName + " " + parentSurname));
+        Character child = repository.findByNameAndSurname(childFirstName, childSurname)
+                .orElseThrow(() -> new RuntimeException("Child character not found: " + childFirstName + " " + childSurname));
 
-            ChildOf childOfRelationship = new ChildOf(child, parent);
-            childOfRepository.save(childOfRelationship);
+        ChildOf childOfRelationship = new ChildOf(child, parent);
+        childOfRepository.save(childOfRelationship);
 
-            String result = "Child-Parent relationship established between " + childFirstName + " " + childSurname +
-                    " and " + parentFirstName + " " + parentSurname;
-            return ResponseEntity.ok(result);
-        } catch (Exception e){
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        String result = "Child-Parent relationship established between " + childFirstName + " " + childSurname +
+                " and " + parentFirstName + " " + parentSurname;
 
+        return CustomResponseModel.wrapWithData(result);
     }
 
 
